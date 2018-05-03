@@ -39,14 +39,14 @@ def stream_socket_control(sock,
         yield sock
     
     except (KeyboardInterrupt, EOFError) as quit_cmd:
-        logging.info(f'Shutting down {mode}...')
+        logging.info(f'Shutting down {mode}.')
 
     except Exception as fatal_error:
         if not fatal_errors_verbosity:
             logging.critical(f'Fatal error ({type(fatal_error)}): {fatal_error.message}')
         else:
             logging.critical(traceback.format_exc())
+        logging.info(f'Shutting down {mode} due to fatal error.')
 
     finally:
         sock.close()
-        logging.info(f'Successfully stopped.')

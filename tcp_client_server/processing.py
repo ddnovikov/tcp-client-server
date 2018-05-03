@@ -4,6 +4,9 @@ import re
 
 from . import tcp
 from .utils import hex_dump
+from .logging import LOG_CONF
+
+logging.basicConfig(**LOG_CONF)
 
 
 def process_error_response(channel, text_size):
