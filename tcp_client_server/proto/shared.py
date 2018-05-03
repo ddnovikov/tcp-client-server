@@ -6,6 +6,7 @@ c_uint8 = c_uint8_
 TYPE_GET = c_uint8(0x00)
 TYPE_LIST = c_uint8(0x01)
 TYPE_ERROR = c_uint8(0xff)
+MAX_MESSAGE_LENGTH = 300
 
 
 def receive_headers(channel, 
@@ -20,3 +21,7 @@ def receive_headers(channel,
 
     return length, response_type
 
+
+def send_headers(channel, msgs):
+    for msg in msgs:
+        tcp.send(channel, msg)
