@@ -1,0 +1,27 @@
+from .client import receive_headers
+
+
+def send_error(channel, error):
+    pass
+
+
+def serve_file(channel):
+    pass
+
+
+def serve_list(channel):
+    pass
+
+
+def process_unexpected_message(channel):
+    pass
+
+
+def serve_request(channel):
+    length = 
+
+
+def serve_requests(channel):
+    while serve_request(channel):
+        pass
+
