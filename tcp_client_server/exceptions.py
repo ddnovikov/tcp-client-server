@@ -1,0 +1,2 @@
+class WrongModeError(Exception):
+    pass

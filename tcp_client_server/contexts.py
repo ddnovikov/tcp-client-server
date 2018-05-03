@@ -4,6 +4,7 @@ import traceback
 
 from contextlib import contextmanager
 
+from .exceptions import WrongModeError
 from .utils import ask_endpoint
 
 
@@ -30,7 +31,7 @@ def stream_socket_control(sock,
             sock.connect_ex(address)
 
         elif mode == 'server':
-            sock.listen(conns_num)
+            sock.listen(server_conns_num)
 
         else:
             raise WrongModeError(f'Unknown mode {mode}.')
@@ -49,4 +50,3 @@ def stream_socket_control(sock,
     finally:
         sock.close()
         logging.info(f'Successfully stopped.')
-

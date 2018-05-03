@@ -107,3 +107,5 @@ ENV/
 
 downloads/
 .idea/
+lab05-tcp-server
+*.jpg

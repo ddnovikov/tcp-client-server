@@ -22,7 +22,7 @@ def send_error(channel, error_msg):
 
 
 def serve_file(channel, path_length):
-    path = str(tcp.receive_msg(channel, path_length, bufsize=None))
+    path = tcp.receive_msg(channel, path_length + 1, bufsize=None).decode()
     file_size = os.path.getsize(path)
 
     length = c_uint32(socket.htonl(sizeof(shared.TYPE_GET) + file_size))
@@ -35,9 +35,9 @@ def serve_file(channel, path_length):
 
 
 def serve_list(channel):
-    files_list = filter(lambda f: os.path.isfile(f)
+    files_list = list(filter(lambda f: os.path.isfile(f)
                                   and not f.startswith('.'),
-                        os.listdir('.'))
+                             os.listdir('.')))
 
     if not files_list:
         send_error(channel, f'Error: unable to count files.')
