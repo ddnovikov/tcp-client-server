@@ -1,6 +1,6 @@
 import socket
 
-from ctypes import *
+from ctypes import c_uint32, sizeof
 
 from . import shared
 from .. import processing
@@ -17,7 +17,7 @@ def download(channel, path):
     elif response_type == shared.TYPE_GET:
         return processing.process_get_response(channel, path, length)
     else:
-        return processing.process_unexpected_response(channel, length, response_type)
+        return processing.process_unexpected_message(channel, length, response_type)
 
 
 def list_files(channel):
@@ -31,4 +31,4 @@ def list_files(channel):
     elif response_type == shared.TYPE_LIST:
         return processing.process_list_response(channel, length)
     else:
-        return processing.process_unexpected_response(channel, length, response_type)
+        return processing.process_unexpected_message(channel, length, response_type)

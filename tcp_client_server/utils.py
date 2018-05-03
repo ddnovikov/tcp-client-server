@@ -17,3 +17,12 @@ def ask_endpoint():
 
     return host, port
 
+
+def read_file_as_bytes(filename, chunksize=4096):
+    with open(filename, "rb") as f:
+        while True:
+            chunk = f.read(chunksize)
+            if chunk:
+                yield chunk
+            else:
+                break

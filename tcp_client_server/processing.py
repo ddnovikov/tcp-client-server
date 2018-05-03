@@ -3,6 +3,7 @@ import os
 import re
 
 from . import tcp
+from .utils import hex_dump
 
 
 def process_error_response(channel, text_size):
@@ -10,8 +11,8 @@ def process_error_response(channel, text_size):
     logging.error(f'Server error: {error_msg}')
 
 
-def process_unexpected_response(channel, length, response_type):
-    logging.error(f'Protocol error: unexpected message (type={response_type}, length={length}).')
+def process_unexpected_message(channel, length, msg_type):
+    logging.error(f'Protocol error: unexpected message (type={msg_type}, length={length}).')
     data = tcp.receive_msg(channel, length, bufsize=None)
     logging.error(f'Payload dump: {hex_dump(data, len(data))}.')
 
