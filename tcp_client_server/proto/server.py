@@ -1,7 +1,7 @@
 import os
 import socket
 
-from ctypes import c_uint32, sizeof
+from ctypes import c_uint32, c_uint8, sizeof
 
 from . import shared
 from .. import tcp
@@ -35,7 +35,23 @@ def serve_file(channel, path_length):
 
 
 def serve_list(channel):
-    pass
+    files_list = filter(lambda f: os.path.isfile(f)
+                                  and not f.startswith('.'),
+                        os.listdir('.'))
+
+    if not files_list:
+        send_error(channel, f'Error: unable to count files.')
+
+    msg_size = sizeof(shared.TYPE_LIST) + len(files_list) + sum([len(fn) for fn in files_list])
+    length = c_uint32(socket.htonl(msg_size))
+
+    msg = [length, shared.TYPE_LIST]
+    for fn in files_list:
+        msg += [c_uint8(socket.htonl(len(fn))), fn.encode()]
+
+    shared.send_headers(channel, msg)
+
+    return True
 
 
 def serve_request(channel):
